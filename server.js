@@ -16,6 +16,32 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/dist'));
 
+router.get('/movies', function(req, res){
+  var options = {
+  "method": "GET",
+  "hostname": "api.themoviedb.org",
+  "port": null,
+  "path": "/3/movie/now_playing?include_adult=false&page=1&language=en-US&api_key=3faf809df83252f672252023c1712984",
+  "headers": {}
+};
+
+var reqMovies = http.request(options, function (resMovies) {
+  var chunks = [];
+
+  resMovies.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  resMovies.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+    res.json(body.toString());
+  });
+});
+reqMovies.write("{}");
+reqMovies.end();
+});
+
 router.get('/movies/:findBy/:value', function(req, res){
   var lookIn;
   var findBy = req.params.findBy;
