@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/dist'));
-
+//get movies
 router.get('/movies', function(req, res){
   var options = {
   "method": "GET",
