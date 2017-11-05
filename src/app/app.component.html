@@ -1,42 +1,38 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
+
+<!--Search Options Panel-->
+<div class="search_panel row">
+  <div class="col-md-2">
+    <select (change)="onChange($event)">
+        <option value="movieName">By Movie</option>
+        <option value="actorName">By Actor</option>
+    </select>
   </div>
-<h2>Look for movies or actors: </h2>
-
-
-
-<select (change)="onChange($event)" class="selectpicker">
-<option value="movieName">Movie</option>
-<option value="actorName">Actor</option>
-</select>
-<button (click)="onClickFind()">Find</button> <input (keyup)="onKey($event)">
-
-<div class="row" *ngFor="let movie of movieList">
-
-  <div *ngIf="movie.known_for === undefined" class="movieViewCmp" style="width: 33%;
-    height: 500px;
-    float: left;
-    text-align: center;
-    padding-top: 10px;    min-width: 350px;">
-      <img style="border-radius: 2px;" src ="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}">
-    <div>{{movie.title}}</div>
+  <div class="col-md-2">
+    <input (keyup)="onKey($event)" placeholder="Actor Or Movies Name..">
   </div>
-
-<div *ngIf="movie.known_for !== undefined">
-<div *ngFor="let actorMovie of movie.known_for">
-  <div class="movieViewCmp" style="width: 33%;
-    height: 500px;
-    float: left;
-    text-align: center;
-    padding-top: 10px;    min-width: 350px;">
-      <img style="border-radius: 2px;" src ="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{actorMovie.poster_path}}">
-    <div>{{actorMovie.title}} ({{movie.name}}) </div>
+  <div class="col-md-2">
+    <button class="btn btn-default" (click)="onClickFind()">Search</button>
   </div>
 </div>
 
-</div>
+<!--Results Panel-->
+<div class="results_movie_panel row">
+   <div *ngFor="let movie of movieList">
+    <div *ngIf="movie.known_for === undefined" class="movieViewCmp" >
+        <img style="border-radius: 2px;" src ="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}">
+      <div>{{movie.title}}</div>
+    </div>
 
+    <div *ngIf="movie.known_for !== undefined">
+      <div *ngFor="let actorMovie of movie.known_for">
+        <div class="movieViewCmp">
+            <img style="border-radius: 2px;" src ="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{actorMovie.poster_path}}">
+          <div>{{actorMovie.title}} ({{movie.name}}) </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<!--Pagination Panel-->
+<div class="page_panel row"></div>
