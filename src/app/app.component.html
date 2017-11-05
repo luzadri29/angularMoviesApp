@@ -5,9 +5,16 @@
   </h1>
   </div>
 <h2>Look for movies or actors: </h2>
-<app-click-find></app-click-find>
 
-<div class="row" *ngFor="let movie of movie.movieList">
+
+
+<select (change)="onChange($event)" class="selectpicker">
+<option value="movieName">Movie</option>
+<option value="actorName">Actor</option>
+</select>
+<button (click)="onClickFind()">Find</button> <input (keyup)="onKey($event)">
+
+<div class="row" *ngFor="let movie of movieList">
 
   <div *ngIf="movie.known_for === undefined" class="movieViewCmp" style="width: 33%;
     height: 500px;
