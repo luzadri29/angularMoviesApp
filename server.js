@@ -34,7 +34,7 @@ var reqMovies = http.request(options, function (resMovies) {
 
   resMovies.on("end", function () {
     var body = Buffer.concat(chunks);
-    console.log(body.toString());
+    //console.log(body.toString());
     var data = JSON.parse(body.toString());
     res.json({data:data});
   });
@@ -70,7 +70,7 @@ var movieDBReq = http.request(options, function (movieDBRes) {
 
   movieDBRes.on("end", function () {
     var body = Buffer.concat(chunks);
-    console.log(body.toString());
+    //console.log(body.toString());
     var data = JSON.parse(body.toString());
     res.json({data:data});
   });
