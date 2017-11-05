@@ -9,58 +9,66 @@ import { MovieResponse }    from './app.movieresponse';
 })
 export class AppComponent {
 
-  title : string;
-  clickMessage = '';
-  values = '';
-  findBy = 'movieName';
+  values :string;
+  findBy :string;
+  currentPageNumber : number;
   movieList = [];
-  result = 'from movies';
 
 
-  constructor(private http: Http, ) { }
+  constructor(private http: Http) {
+    this.values = '';
+    this.currentPageNumber = 1;
+    this.findBy = 'movieName';
+  }
 
 
-  nowPlayingVariable =  this.getNowPlaying()
-        .then((val) => {
-          let data = val;
-          console.log(data.page);
-          console.log(data.results);
-          this.movieList = data.results;
-        })
 
-
-        onKey(event: any) { // without type info
+        onKey(event: any) {
           this.values = event.target.value;
+          //this.onClickFind(undefined);
         }
 
-        onClickFind() {
-          this.getByQuery(this.findBy, this.values).then((val) => {
-            let data = val;
-            //console.log(data.results);
-            this.movieList = data.results;
-        })
+        onClickFind(action) {
+
+          let cPage = this.currentPageNumber;
+          let findBy = this.findBy;
+          let value = this.values;
+
+          if(action != undefined){
+            if(action === 'next'){
+              cPage++;
+            }else  if(action === 'prev' && cPage > 0 ){
+              cPage--;
+            }
+
+            if(cPage > 0 ){
+              this.currentPageNumber = cPage;
+            }
+          }
+
+          if(value === "" || value === undefined){
+              findBy = "nowPlaying";
+              cPage  = 1;
+              value = "";
+          }
+
+            this.getByQuery(findBy, value, cPage).then((val) => {
+                let data = val;
+                this.movieList = data.results;
+                window.scrollTo(0, 0);
+            })
+
       }
 
         onChange(event: any){
-            console.log("onChange escuchando "+ event.target.value);
             this.findBy = event.target.value;
         }
 
+        getByQuery(findBy, query, page){
+          query =  encodeURIComponent(query);
 
-        getNowPlaying(){
-           return  new Promise<MovieResponse>((resolve, reject) => {
-             this.http.get("/api/movies")
-             .toPromise()
-             .then( response => {
-               resolve(response.json().data)
-             })
-             .catch(err => console.log(err))
-           });
-        }
-
-        getByQuery(findBy, query){
           return  new Promise<MovieResponse>((resolve, reject) => {
-            this.http.get("/api/movies/"+findBy+"/"+query)
+            this.http.get("/api/movies/"+findBy+"?page="+page+"&value="+query)
             .toPromise()
             .then( response => {
               resolve(response.json().data)
@@ -68,6 +76,9 @@ export class AppComponent {
             .catch(err => console.log(err))
           });
         }
+
+        // init default search
+        nowPlayingVariable =  this.onClickFind(undefined);
 
 
 }

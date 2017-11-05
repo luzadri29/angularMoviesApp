@@ -1,18 +1,20 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
 <!--Search Options Panel-->
-<div class="search_panel row">
-  <div class="col-md-2">
-    <select (change)="onChange($event)">
-        <option value="movieName">By Movie</option>
-        <option value="actorName">By Actor</option>
-    </select>
-  </div>
-  <div class="col-md-2">
-    <input (keyup)="onKey($event)" placeholder="Actor Or Movies Name..">
-  </div>
-  <div class="col-md-2">
-    <button class="btn btn-default" (click)="onClickFind()">Search</button>
+<div class="search_panel ">
+  <div class="row">
+    <div class="col-md-2">
+      <select (change)="onChange($event)" (ngModel)="findBy">
+          <option value="movieName">By Movie</option>
+          <option value="actorName">By Actor</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <input (keyup)="onKey($event)" placeholder="Actor Or Movies Name..">
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-default" (click)="onClickFind()">Search</button>
+    </div>
   </div>
 </div>
 
@@ -35,4 +37,12 @@
   </div>
 </div>
 <!--Pagination Panel-->
-<div class="page_panel row"></div>
+<div class="page_panel">
+  <div class="row">
+    <div class="col-md-12">
+        <button class="btn btn-default" (click)="onClickFind('prev')"> << Prev </button>
+        <span>{{currentPageNumber}}</span>
+        <button class="btn btn-default" (click)="onClickFind('next')"> Next >> </button>
+    </div>
+  </div>
+</div>
