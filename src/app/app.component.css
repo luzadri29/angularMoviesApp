@@ -11,6 +11,12 @@ body{
     width: 400px;
 }
 
+.detail_autor_panel .movieViewCmp{
+  width: 100%;
+  margin: 0px 10px 0px 10px;
+}
+
+
 .results_movie_panel div  {
   float: left;
   width: 400px;

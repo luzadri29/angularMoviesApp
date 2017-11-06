@@ -50,10 +50,6 @@ export class AppComponent {
             }else  if(action === 'prev' && cPage > 0 ){
               cPage--;
             }
-
-            if(cPage > 0 ){
-              this.currentPageNumber = cPage;
-            }
           }
 
           if(value === "" || value === undefined){
@@ -61,6 +57,12 @@ export class AppComponent {
               cPage  = 1;
               value = "";
           }
+
+          if(cPage > 0 ){
+            this.currentPageNumber = cPage;
+          }
+
+
 
             this.getByQuery(findBy, value, cPage).then((val) => {
                 let data = val;
@@ -72,6 +74,7 @@ export class AppComponent {
 
         onChange(event: any){
             this.findBy = event.target.value;
+            this.currentPageNumber = 1;
         }
 
 
@@ -92,16 +95,12 @@ export class AppComponent {
 
         getAutorDetail(autorId){
           let cPage = this.currentPageNumber;
-          console.log(autorId);
           this.autorDetail = autorId;
-
           this.getByQuery("actorId", autorId.id, cPage).then((val) => {
               let data = val;
               this.movieList = data.results;
           })
-
           this.showDetail = true;
-
         }
 
 

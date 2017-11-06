@@ -6,6 +6,17 @@
       width:100% !important;
     }
 
+    .detail_autor_panel .movieViewCmp{
+      width: 100%;
+      margin: 0px 10px 0px 10px;
+    }
+
+    .detail_autor_panel .movieViewCmp img{
+      width: 100%;
+      max-width: 340px;
+    }
+
+
     .search_panel {
       height: 160px !important;
     }
@@ -21,7 +32,11 @@
       width:100% !important;
   }
   .results_movie_panel {
-      margin-top: 185px !important;
+    margin-top: 185px !important;
+  }
+
+  .detail_autor_panel{
+    margin-top: 160px !important;
   }
 
   .movieDetail{
