@@ -13,12 +13,21 @@ export class AppComponent {
   findBy :string;
   currentPageNumber : number;
   movieList = [];
+  showDetail:boolean;
+  autorDetail:{};
+  baseImagesURLPath :string;
+
+
 
 
   constructor(private http: Http) {
     this.values = '';
     this.currentPageNumber = 1;
     this.findBy = 'movieName';
+    this.showDetail = false;
+    this.autorDetail = {"name":"default", "profile_path":""};
+    this.baseImagesURLPath = "https://image.tmdb.org/t/p/w300_and_h450_bestv2/"
+
   }
 
 
@@ -29,10 +38,11 @@ export class AppComponent {
         }
 
         onClickFind(action) {
-
           let cPage = this.currentPageNumber;
           let findBy = this.findBy;
           let value = this.values;
+
+          this.showDetail = false;
 
           if(action != undefined){
             if(action === 'next'){
@@ -64,6 +74,8 @@ export class AppComponent {
             this.findBy = event.target.value;
         }
 
+
+
         getByQuery(findBy, query, page){
           query =  encodeURIComponent(query);
 
@@ -76,6 +88,22 @@ export class AppComponent {
             .catch(err => console.log(err))
           });
         }
+
+
+        getAutorDetail(autorId){
+          let cPage = this.currentPageNumber;
+          console.log(autorId);
+          this.autorDetail = autorId;
+
+          this.getByQuery("actorId", autorId.id, cPage).then((val) => {
+              let data = val;
+              this.movieList = data.results;
+          })
+
+          this.showDetail = true;
+
+        }
+
 
         // init default search
         nowPlayingVariable =  this.onClickFind(undefined);

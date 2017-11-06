@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*Responsive Css For Small Mobiles*/
+@media  (max-width: 768px) {
+    .movieViewCmp{
+      width:100% !important;
+    }
+
+    .search_panel {
+      height: 160px !important;
+    }
+
+    .search_panel input,   .search_panel select,   .search_panel button{
+      width: 100% !important;
+      margin-top: 3px !important;
+      margin-bottom: 3px !important;
+      height: 35px !important;
+    }
+
+  .results_movie_panel div {
+      width:100% !important;
+  }
+  .results_movie_panel {
+      margin-top: 185px !important;
+  }
+
+  .movieDetail{
+      margin-left: 10px !important;
+  }
+}

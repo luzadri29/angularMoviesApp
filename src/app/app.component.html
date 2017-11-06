@@ -19,26 +19,83 @@
 </div>
 
 <!--Results Panel-->
-<div class="results_movie_panel row">
+<div class="results_movie_panel row"  *ngIf="!showDetail">
    <div *ngFor="let movie of movieList">
     <div *ngIf="movie.known_for === undefined" class="movieViewCmp" >
-        <img style="border-radius: 2px;" src ="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}">
+        <img style="border-radius: 2px;"  src ="{{baseImagesURLPath}}{{movie.poster_path}}">
       <div>{{movie.title}}</div>
     </div>
 
     <div *ngIf="movie.known_for !== undefined">
-      <div *ngFor="let actorMovie of movie.known_for">
-        <div class="movieViewCmp">
-            <img style="border-radius: 2px;" src ="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{actorMovie.poster_path}}">
-          <div>{{actorMovie.title}} ({{movie.name}}) </div>
-        </div>
+      <div  class="movieViewCmp" style=" cursor: pointer;" (click)="getAutorDetail(movie)" >
+          <img style="border-radius: 2px;" src ="{{baseImagesURLPath}}{{movie.profile_path}}">
+        <div>{{movie.name}}</div>
       </div>
     </div>
   </div>
+
+
+  <!--Not Found Page-->
+  <div *ngIf="movieList.length === 0" class="notFoundPage">Info Not Found</div>
 </div>
-<!--Pagination Panel-->
-<div class="page_panel">
+
+
+
+<!--Show Actor Detail Section-->
+<div class="detail_autor_panel" *ngIf="showDetail">
   <div class="row">
+
+
+    <!--Actor Section Section-->
+    <div class="col-md-3">
+      <div  class="movieViewCmp"  >
+          <img style="border-radius: 2px;" width="100%" src ="{{baseImagesURLPath}}{{autorDetail.profile_path}}">
+        <div>{{autorDetail.name}}</div>
+      </div>
+    </div>
+
+    <!--Actor Movie List Section-->
+    <div class="col-md-9">
+           <div *ngFor="let autorMovie of movieList">
+
+
+                <div class="row movieDetail" *ngIf="autorMovie.poster_path !== null">
+                    <!--Actor Movie List Image-->
+                  <div class="col-md-2" style="padding-left: 0px;">
+                      <img style="border-radius: 2px" width="150" src ="{{baseImagesURLPath}}{{autorMovie.poster_path}}">
+                  </div>
+
+                    <!--Actor Movie List Description-->
+                  <div class="col-md-10" style="padding: 20px 50px;">
+                    <div class="row"  style="margin-bottom: 20px; font-weight: 500;">
+                      <div class="col-md-6">
+                           {{autorMovie.title}}
+                      </div>
+                      <div class="col-md-6"  style="text-align:right">
+                          <div class="glyphicon glyphicon-calendar"></div>
+
+                           {{autorMovie.release_date}}
+                             <div class="fa fa-calendar"></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div  class="col-md-12">
+                             {{autorMovie.overview}}
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+           </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--Pagination Panel-->
+<div class="page_panel" >
+  <div class="row" *ngIf="!showDetail">
     <div class="col-md-12">
         <button class="btn btn-default" (click)="onClickFind('prev')"> << Prev </button>
         <span>{{currentPageNumber}}</span>

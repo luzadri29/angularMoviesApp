@@ -10,15 +10,16 @@ var port = (process.env.PORT || 7171);
 //api routes
 var router = express.Router();
 
-//POST bodyParsers
+//bodyParsers
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/dist'));
 
+//API end points
 router.get('/movies/:findBy/', apiService.getMoviesBy);
-
 router.get('/movies/detail/:movieId', apiService.getMovieDetail);
 
+//user API prefix
 app.use('/api', router);
 
 // start server

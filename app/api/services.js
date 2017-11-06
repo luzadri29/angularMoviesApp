@@ -1,5 +1,12 @@
 
-var http       = require('https');
+let http       = require('https');
+let requestOptions = {
+  "method": "GET",
+  "hostname": "api.themoviedb.org",
+  "port": null,
+  "path":"",
+  "headers": {}
+};
 
 let getMoviesBy = function(req, res){
 
@@ -10,12 +17,9 @@ let getMoviesBy = function(req, res){
     var api_key = "3faf809df83252f672252023c1712984";
     var language = "en-US";
     var include_adult = false;
-
     var autorIdList = [];
 
     value =  encodeURIComponent(value);
-    console.log('recibing movie call '+ value);
-
 
     if(findBy == "movieName"){
       urlPath = "/3/search/movie?query="+value+"&";
@@ -23,29 +27,30 @@ let getMoviesBy = function(req, res){
      urlPath = "/3/search/person?query="+value+"&";
     }else if(findBy == "nowPlaying"){
       urlPath = "/3/movie/now_playing?";
+    }else if(findBy == "actorId"){
+        urlPath = "/3/discover/movie?with_cast="+value+"&sort_by=release_date.desc&";
     }
 
     urlPath += "include_adult="+include_adult+"&page="+currentPage+"&language="+language+"&api_key="+api_key;
 
     //console.log("Calling URL: "+urlPath);
 
-    var options = {
-      "method": "GET",
-      "hostname": "api.themoviedb.org",
-      "port": null,
-      "path":urlPath,
-      "headers": {}
-    };
-    var movieDBReq = http.request(options, function (movieDBRes) {
+    requestOptions.path = urlPath;
+
+
+    var movieDBReq = http.request(requestOptions, function (movieDBRes) {
     var chunks = [];
+    var body;
+    var data;
+
     movieDBRes.on("data", function (chunk) {
       chunks.push(chunk);
     });
 
     movieDBRes.on("end", function () {
-      var body = Buffer.concat(chunks);
-      var data = JSON.parse(body.toString());
-      res.json({data:data});
+     body = Buffer.concat(chunks);
+      data = JSON.parse(body.toString());
+      res.json({"data":data});
     });
   });
     movieDBReq.write("{}");
@@ -57,38 +62,28 @@ let getMoviesBy = function(req, res){
 
 let getMovieDetail = function(req, res){
   var movieId = req.params.movieId;
-  console.log('recibing movie detail call '+ value);
 
-  var options = {
-  "method": "GET",
-  "hostname": "api.themoviedb.org",
-  "port": null,
-  "path":  "/3/movie/"+movieId+"?language=en-US&api_key=3faf809df83252f672252023c1712984",
-  "headers": {}
-};
-var moviedetDBReq = http.request(options, function (moviedetDBRes) {
-  var chunks = [];
-  moviedetDBRes.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
+    requestOptions.path = "/3/movie/"+movieId+"?language=en-US&api_key=3faf809df83252f672252023c1712984";
 
-  moviedetDBRes.on("end", function () {
-    var body = Buffer.concat(chunks);
-    //console.log(body.toString());
-    var data = JSON.parse(body.toString());
-    res.json({data:data});
+  var moviedetDBReq = http.request(options, function (moviedetDBRes) {
+    var chunks = [];
+    var body;
+    var data;
+
+    moviedetDBRes.on("data", function (chunk) {
+      chunks.push(chunk);
+    });
+
+    moviedetDBRes.on("end", function () {
+       body = Buffer.concat(chunks);
+       data = JSON.parse(body.toString());
+      res.json({"data":data});
+    });
+
   });
-});
   moviedetDBReq.write("{}");
   moviedetDBReq.end();
 }
-
-let getActorDetail = function(){
-
-
-
-}
-
 
 
 module.exports =  {
