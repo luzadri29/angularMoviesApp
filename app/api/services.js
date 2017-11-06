@@ -21,6 +21,11 @@ let getMoviesBy = function(req, res){
 
     value =  encodeURIComponent(value);
 
+//determines which view should show by the data sent by the user
+//movieName = look for movies
+//actorName = Look for actors
+//nowPlaying = home
+//actorId = look for Actor detail with id
     if(findBy == "movieName"){
       urlPath = "/3/search/movie?query="+value+"&";
     }else if(findBy == "actorName"){

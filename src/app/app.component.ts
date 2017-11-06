@@ -19,8 +19,6 @@ export class AppComponent {
   baseImagesURLNotFound :string;
 
 
-
-
   constructor(private http: Http) {
     this.values = '';
     this.currentPageNumber = 1;
@@ -33,19 +31,18 @@ export class AppComponent {
   }
 
 
-
         onKey(event: any) {
           this.values = event.target.value;
           //this.onClickFind(undefined);
         }
-
+        //Receive all the click events
         onClickFind(action) {
           let cPage = this.currentPageNumber;
           let findBy = this.findBy;
           let value = this.values;
 
           this.showDetail = false;
-
+         //pagination
           if(action != undefined){
             if(action === 'next'){
               cPage++;
@@ -53,7 +50,7 @@ export class AppComponent {
               cPage--;
             }
           }
-
+          //home
           if(value === "" || value === undefined){
               findBy = "nowPlaying";
               cPage  = 1;
@@ -80,7 +77,7 @@ export class AppComponent {
         }
 
 
-
+       //return a list of elements: Movies or actors
         getByQuery(findBy, query, page){
           query =  encodeURIComponent(query);
 
