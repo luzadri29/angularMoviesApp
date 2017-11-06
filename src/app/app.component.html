@@ -22,13 +22,13 @@
 <div class="results_movie_panel row"  *ngIf="!showDetail">
    <div *ngFor="let movie of movieList">
     <div *ngIf="movie.known_for === undefined" class="movieViewCmp" >
-        <img style="border-radius: 2px;"  src ="{{baseImagesURLPath}}{{movie.poster_path}}">
+        <img style="border-radius: 2px;"  src ="{{ movie.poster_path  !== null ? baseImagesURLPath+movie.poster_path : baseImagesURLNotFound   }}">
       <div>{{movie.title}}</div>
     </div>
 
     <div *ngIf="movie.known_for !== undefined">
       <div  class="movieViewCmp" style=" cursor: pointer;" (click)="getAutorDetail(movie)" >
-          <img style="border-radius: 2px;" src ="{{baseImagesURLPath}}{{movie.profile_path}}">
+          <img style="border-radius: 2px;" src ="{{ movie.profile_path  !== null ? baseImagesURLPath+movie.profile_path : baseImagesURLNotFound   }}">
         <div>{{movie.name}}</div>
       </div>
     </div>
@@ -49,7 +49,7 @@
     <!--Actor Section Section-->
     <div class="col-md-3">
       <div  class="movieViewCmp"  >
-          <img style="border-radius: 2px;" width="100%" src ="{{baseImagesURLPath}}{{autorDetail.profile_path}}">
+          <img style="border-radius: 2px;" width="100%" src ="{{ autorDetail.profile_path  !== null ? baseImagesURLPath+autorDetail.profile_path : baseImagesURLNotFound   }}">
         <div>{{autorDetail.name}}</div>
       </div>
     </div>
@@ -62,7 +62,7 @@
                 <div class="row movieDetail" *ngIf="autorMovie.poster_path !== null">
                     <!--Actor Movie List Image-->
                   <div class="col-md-2" style="padding-left: 0px;">
-                      <img style="border-radius: 2px" width="150" src ="{{baseImagesURLPath}}{{autorMovie.poster_path}}">
+                      <img style="border-radius: 2px" width="150" src ="{{ autorMovie.poster_path  !== null ? baseImagesURLPath+autorMovie.poster_path : baseImagesURLNotFound   }}">
                   </div>
 
                     <!--Actor Movie List Description-->

@@ -16,6 +16,7 @@ export class AppComponent {
   showDetail:boolean;
   autorDetail:{};
   baseImagesURLPath :string;
+  baseImagesURLNotFound :string;
 
 
 
@@ -27,6 +28,7 @@ export class AppComponent {
     this.showDetail = false;
     this.autorDetail = {"name":"default", "profile_path":""};
     this.baseImagesURLPath = "https://image.tmdb.org/t/p/w300_and_h450_bestv2/"
+    this.baseImagesURLNotFound = "assets/images/no-image.png";
 
   }
 
